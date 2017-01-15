@@ -246,7 +246,7 @@ function isValid(input) {
         return false;
     }
     if (isNegative(input)) {
-        input = input.substring(1, input.length);
+        input = input.substring(1, input.length); // trim "-"
     }
     if (!isNumeric(input)) {
         return false;
@@ -258,12 +258,12 @@ function isValid(input) {
     } else {
         var strPredecimal = input.substring(0, decimalIndex);
         var strPostdecimal = input.substring(decimalIndex + 1, input.length);
-        if (strPredecimal.length + strPostdecimal.length === 0) {
+        if (strPredecimal.length + strPostdecimal.length === 0) { //"."
             return false;
-        } else if (strPredecimal.length < 3007 && strPostdecimal.length < 3007) {
+        } else if (strPredecimal.length < 3007 && strPostdecimal.length < 3007) { // valid length
             return true;
         } else {
-            return false;
+            return false; // invalid length
         }
     }
 }

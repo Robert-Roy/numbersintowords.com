@@ -6,12 +6,13 @@ All rights reserved. Copyright Robert Roy 2016.
     <head>
         <meta charset="UTF-8">
         <title>Numbers Into Words</title>
+        <link rel="stylesheet" href="default.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="script.js"></script>
     </head>
     <body>            
-        <label class="label" for="input">Enter a number:</label><br>
-        <textarea type="text" rows="4" id="input" name="input"></textarea><br>
-        <p id="output"></p>
+        <div><label class="label" for="input">Enter a number:</label></div>
+        <textarea type="text" rows="4" id="input" name="input">This page will not work without JavaScript.</textarea><br>
+        <div id="output"></div>
     </body>
 </html>

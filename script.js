@@ -248,6 +248,9 @@ function isValid(input) {
     if (isNegative(input)) {
         input = input.substring(1, input.length);
     }
+    if (!isNumeric(input)){
+        return false;
+    }
     var decimalIndex = 0;
     decimalIndex = input.indexOf(".");
     if (decimalIndex === -1 && input.length < 3007) {

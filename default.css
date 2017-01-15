@@ -54,26 +54,10 @@ body, html{
     resize:none;
 
 }
-.label{
-}
-#highlighter{
-    display:block;
-    height:180%;
-    width:231px;
-    opacity:.8;
-    border:1px black solid;
-    border-radius:5px;
-    position:absolute;
-    top:50%;
-    left:15px;
-    -webkit-transform:translate(0, -50%);
-    transform:translate(0, -50%);
-    box-shadow: 0px 0px 5px black;
-    background: #444444;
-    background: -webkit-radial-gradient(black, #444444);
-    background: -o-radial-gradient(black, #444444);
-    background: -moz-radial-gradient(black, #444444);
-    background: radial-gradient(black, #444444);
+#copyThis{
+    display:fixed;
+    top:0px;
+    left:-5000px;
 }
 textarea{
 }
@@ -81,12 +65,14 @@ textarea{
     font-size:18px;
     color:black;
     width:auto;
-    display:flex;
+    margin-top:0px;
+    display:inline-block;
     min-height:38px;
     margin:auto;
     padding:5px;
     border-radius:5px;
-    border:2px #AAAAAA;
+    border:1px #AAAAAA;
     border-style:solid;
     background:#f0f0f0;
+    margin-bottom:5px;
 }

@@ -68,7 +68,7 @@ function getConvertedString(strConvert, blnFraction) {
         //Note: There are no commas in the input at this point, comma is only
         //used for ease of reference
         //number of commas that would be in the number written out
-        var commas = Math.trunc((strConvert.length - 1) / 3);
+        var commas = Math.floor((strConvert.length - 1) / 3);
         //everything before the comma (or end, if there is not one)
         var precomma = strConvert.length % 3;
         // input without length cannot get to this point, so 0 is always 3

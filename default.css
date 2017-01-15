@@ -1,0 +1,92 @@
+/*
+All rights reserved. Copyright Robert Roy 2016.
+*/
+/* 
+    Created on : Jan 15, 2017, 2:01:54 PM
+    Author     : Robert Roy <www.robertsworkspace.com>
+*/
+
+*{
+    position:relative;
+    color:black;
+    padding:0px;
+    margin:0px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+p{
+    max-width:450px;
+}
+img{
+    max-width:100%;
+    max-height:100%;
+}
+#main{
+    padding-bottom:50px;
+    text-align: center;
+}
+body, html{
+    text-align:center;
+    min-height:100%;
+    min-width:100%;
+}
+#div{
+    text-align:center;
+    font-size:12px;
+    display:block;
+    width:100%;
+}
+#output{
+    font-size:12px;
+    display:block;
+    width:100%;
+}
+.input[type="text"], textarea{
+    background-color:#f0f0f0;
+    display:inline-flex;
+    width:calc(100% - 20px);
+    color:black;
+    border-radius:1px;
+    padding:5px;
+    margin:5px;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:12px;
+    resize:none;
+
+}
+.label{
+}
+#highlighter{
+    display:block;
+    height:180%;
+    width:231px;
+    opacity:.8;
+    border:1px black solid;
+    border-radius:5px;
+    position:absolute;
+    top:50%;
+    left:15px;
+    -webkit-transform:translate(0, -50%);
+    transform:translate(0, -50%);
+    box-shadow: 0px 0px 5px black;
+    background: #444444;
+    background: -webkit-radial-gradient(black, #444444);
+    background: -o-radial-gradient(black, #444444);
+    background: -moz-radial-gradient(black, #444444);
+    background: radial-gradient(black, #444444);
+}
+textarea{
+}
+.crispbutton{
+    font-size:18px;
+    color:black;
+    width:auto;
+    display:flex;
+    min-height:38px;
+    margin:auto;
+    padding:5px;
+    border-radius:5px;
+    border:2px #AAAAAA;
+    border-style:solid;
+    background:#f0f0f0;
+}

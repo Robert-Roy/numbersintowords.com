@@ -17,6 +17,9 @@ $(document).ready(function () {
     });
     $("#input").keyup(function () {
         $("#output").html(tryConvert($(this).val()));
+        if($(this).val() === ""){
+            $("#output").html("");
+        }
     });
 });
 

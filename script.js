@@ -117,7 +117,7 @@ function getConvertedString(strConvert, blnFraction) {
         }
         // substring of everything before the comma
         var strThisUnit = strConvert.substring(0, precomma);
-        
+
         //loop trims zeroes at the beginning of numbers
         for (var a = 0; a < strThisUnit.length; a++) {
             if (strThisUnit.substring(a, a + 1) === "0") {
@@ -248,7 +248,7 @@ function isValid(input) {
     if (isNegative(input)) {
         input = input.substring(1, input.length);
     }
-    if (!isNumeric(input)){
+    if (!isNumeric(input)) {
         return false;
     }
     var decimalIndex = 0;
@@ -258,7 +258,9 @@ function isValid(input) {
     } else {
         var strPredecimal = input.substring(0, decimalIndex);
         var strPostdecimal = input.substring(decimalIndex + 1, input.length);
-        if (strPredecimal.length < 3007 && strPostdecimal.length < 3007) {
+        if (strPredecimal.length + strPostdecimal.length === 0) {
+            return false;
+        } else if (strPredecimal.length < 3007 && strPostdecimal.length < 3007) {
             return true;
         } else {
             return false;

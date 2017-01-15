@@ -44,6 +44,7 @@ $(document).ready(function () {
     $copy.click(function () {
         var target = document.getElementById("copyThis");
         target.setSelectionRange(0, target.value.length);
+        $copyThis.focus();
         window.scrollTo(0, 0);
         try {
             document.execCommand("copy");

@@ -289,7 +289,7 @@ function tens(input) {
 }
 
 function isValid(input) {
-    if (input === "") {
+    if (input === "" || input === "-0") {
         return false;
     }
     if (isNegative(input)) {

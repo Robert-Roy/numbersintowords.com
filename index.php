@@ -10,6 +10,10 @@ All rights reserved. Copyright Robert Roy 2016.
         <link rel="stylesheet" href="default.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="script.js"></script>
+        <link rel="stylesheet" href="jasmine/lib/jasmine-2.1.2/jasmine.css">
+        <script src="jasmine/lib/jasmine-2.1.2/jasmine.js"></script>
+        <script src="jasmine/lib/jasmine-2.1.2/jasmine-html.js"></script>
+        <script src="jasmine/lib/jasmine-2.1.2/boot.js"></script>
     </head>
     <body>            
         <div><label class="label" for="input">Enter a number:</label></div>
@@ -18,5 +22,6 @@ All rights reserved. Copyright Robert Roy 2016.
         <input id="impress" class="crispbutton" style="margin-top:3px" type="submit" value="Impress Me">
         <div id="output"></div>
         <input id="copyThis" type="text" name="copyThis">
+        <script src="jasmine/spec/feedreader.js"></script>
     </body>
 </html>

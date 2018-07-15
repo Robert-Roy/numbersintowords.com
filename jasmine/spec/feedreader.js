@@ -3,77 +3,109 @@
  * to ensure they don't run until the DOM is ready.
  */
 $(function () {
-    describe('RSS Feeds', function () {
-        it('are defined', function () {
-            expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
-        });
+    var invalidInputs = [
+        "$1.00",
+        "1/2",
+        "1E2",
+        "1E02",
+        "1E+02",
+        "-$1.00",
+        "-1/2",
+        "-1E2",
+        "-1E02",
+        "-1E+02",
+        "1/0",
+        "0/0",
+        "-2147483648/-1",
+        "-9223372036854775808/-1",
+        "-0",
+        "-0.0",
+        "+0",
+        "+0.0",
+        "0..0",
+        ".",
+        "0.0.0",
+        "0,00",
+        "0,,0",
+        ",",
+        "0,0,0",
+        "0.0/0",
+        "1.0/0.0",
+        "0.0/0.0",
+        "1,0/0,0",
+        "0,0/0,0",
+        "--1",
+        "-",
+        "-.",
+        "-,",
+        "NaN",
+        "Infinity",
+        "-Infinity",
+        "INF",
+        "1#INF",
+        "-1#IND",
+        "1#QNAN",
+        "1#SNAN",
+        "1#IND",
+        "0x0",
+        "0xffffffff",
+        "0xffffffffffffffff",
+        "0xabad1dea",
+        "1,000.00",
+        "1 000.00",
+        "1'000.00",
+        "1,000,000.00",
+        "1 000 000.00",
+        "1'000'000.00",
+        "1.000,00",
+        "1 000,00",
+        "1'000,00",
+        "1.000.000,00",
+        "1 000 000,00",
+        "1'000'000,00",
+        "2.2250738585072011e-308",
+        "test",
+        "\"\"",
+        "/"];
+    var validInputs = [
+        "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+        "-5",
+        "-5.",
+        "500",
+        "123456789012345678901234567890123456789",
+        "01000",
+        "08",
+        "09",
+        "0",
+        "1",
+        "1.00"
+    ];
+    var zeroValues = [
+        "0.00",
+        "0.",
+        ".0",
+        "0"
+    ];
 
-        it('should have valid URLs', function () {
-            for (var i = 0, len = allFeeds.length; i < len; i++) {
-                expect(allFeeds[i].url).toBeDefined();
-                expect(allFeeds[i].url.length).not.toBe(0);
-            }
-        });
-
-        it('should have valid names', function () {
-            for (var i = 0, len = allFeeds.length; i < len; i++) {
-                expect(allFeeds[i].name).toBeDefined();
-                expect(allFeeds[i].name.length).not.toBe(0);
-            }
-        });
-    });
-
-    describe('The menu', function () {
-        it('should not be visible by default', function () {
-            // menu-hidden class is responsible for hiding of the menu
-            expect(document.body.classList.contains("menu-hidden")).toBe(true);
-        });
-        it('should be visible if clicked', function () {
-            // verifies clicking the menu-icon-link toggles the menu-hidden class properly
-            $('.menu-icon-link').click();
-            expect(document.body.classList.contains("menu-hidden")).toBe(false);
-            $('.menu-icon-link').click();
-        });
-    });
-
-    describe('Initial Entries', function () {
-        beforeEach(function (done) {
-            loadFeed(0, done);
-        });
-        it('has entries present after loadFeed', function (done) {
-            // search for any articles with the length class inside of the .feed element
-            var result = false;
-            var $articles = $('.feed').find('article');
-            for (var i = 0, len = $articles.length; i < len; i++) {
-                if ($articles.hasClass('entry')) {
-                    result = true;
-                    break;
+    describe('isValid', function () {
+        it('returns false on invalid inputs', function () {
+            invalidInputs.forEach(function (invalidString) {
+                let stringIsValid = isValid(invalidString);
+                //console.log(invalidString);
+                if(stringIsValid){
+                    console.log(invalidString + " should return false, but returns true.");
                 }
-            };
-            expect(result).toBe(true);
-            done();
+                expect(stringIsValid).toBe(false);
+            });
         });
-    });
-
-    describe('New Feed Selection', function () {
-        // Load articles, save them under articlesOriginal. Then load a different feed,
-        // save it to articlesNew and compare the two. They should not match.
-        var articlesOriginal = '1';
-        var articlesNew = '2';
-        beforeEach(function (done) {
-            loadFeed(0, done);
-        });
-        it('successfully load initial feed for comparison', function (done) {
-            articlesOriginal = $('.feed').find('article');
-            expect(articlesOriginal).toBeDefined();
-            loadFeed(1, done);
-        });
-        it('new feed actually changes the old feed', function (done) {
-            articlesNew = $('.feed').find('article');
-            expect(articlesNew).toBeDefined();
-            expect(articlesNew === articlesOriginal).toBe(false);
-            done();
+        it('returns true on valid inputs', function () {
+            validInputs.forEach(function (validString) {
+                let stringIsValid = isValid(validString);
+                if(!stringIsValid){
+                    console.log(validString + " should return true, but returns false.");
+                }
+                expect(stringIsValid).toBe(true);
+            });
         });
     });
 });

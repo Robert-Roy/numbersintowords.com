@@ -13,6 +13,9 @@ $(document).ready(function () {
     var $output = $("#output");
     var $copy = $("#copy");
 
+    $input.val("");
+    $copyThis.val("");
+
     $input.keypress(function (e) {
         // Prevents creating newlines in the input field
         if (e.keyCode === 13) {

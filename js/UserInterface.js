@@ -13,6 +13,7 @@ $(document).ready(function () {
     var $output = $("#output");
     var $copy = $("#copy");
 
+    // Reset fields so each refresh is a new page without previous cached inputs
     $input.val("");
     $copyThis.val("");
 
@@ -70,13 +71,13 @@ $(document).ready(function () {
         // It attempts to convert (function must be provided by another file).
         // The return from the convert() function is placed into $output.html and
         // copyThis (a hidden input used for copying).
-        
+
         var output = convert(that.val());
         $output.html(output);
         $copyThis.val(output);
         if (that.val() === "") {
             $output.html("");
-        };
+        }
         // Rename copy function to its original text, just in case it was modified
         // Because the button was pressed for any reason.
         $copy.val("Copy");

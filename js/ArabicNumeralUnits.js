@@ -2,6 +2,8 @@
  * All rights reserved. Copyright Robert Roy 2018.
  */
 
+// This is a list of all units for measuring arabic numbers, to millimillion
+
 var arabicNumeralUnits = [
     "",
     " thousand ",

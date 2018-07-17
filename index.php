@@ -8,7 +8,7 @@ All rights reserved. Copyright Robert Roy 2016.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Numbers Into Words</title>
         <link rel="stylesheet" href="default.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="lib/jquery/jquery-3.3.1.min.js"></script>
         <script src="js/ArabicNumeralUnits.js"></script>
         <script src="js/UserInterface.js"></script>
         <script src="js/Converter.js"></script>

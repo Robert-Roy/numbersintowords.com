@@ -292,6 +292,23 @@ function isValid(input) {
     if (input === "" || input === "-0") {
         return false;
     }
+    if (input.includes('-')){
+        if(!(input.includes('1') || 
+                input.includes('2') || 
+                input.includes('3') || 
+                input.includes('4') ||
+                input.includes('5') || 
+                input.includes('6') || 
+                input.includes('7') || 
+                input.includes('8') || 
+                input.includes('9'))){
+        return false;
+            
+        }
+    }
+    if(input.indexOf('--') > -1){
+        return false;
+    }
     if (isNegative(input)) {
         input = input.substring(1, input.length); // trim "-"
     }

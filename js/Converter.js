@@ -220,31 +220,13 @@ function tens(input) {
 }
 
 function isValid(input) {
-    if (input === "" || input === "-0") {
-        return false;
-    }
-    if (input.includes('-')) {
-        if (!(input.includes('1') ||
-                input.includes('2') ||
-                input.includes('3') ||
-                input.includes('4') ||
-                input.includes('5') ||
-                input.includes('6') ||
-                input.includes('7') ||
-                input.includes('8') ||
-                input.includes('9'))) {
-            return false;
-
-        }
-    }
-    if (input.indexOf('--') > -1) {
-        return false;
-    }
-    if (isNegative(input)) {
-        input = input.substring(1, input.length); // trim "-"
-    }
+    // Numbers only
     if (!isNumeric(input)) {
         return false;
+    }
+    // If numbers is negative, remove the negative sign.
+    if (isNegative(input)) {
+        input = input.substring(1, input.length); // trim "-"
     }
     var decimalIndex = 0;
     decimalIndex = input.indexOf(".");
@@ -271,6 +253,11 @@ function isNegative(input) {
 }
 
 function isNumeric(input) {
+
+    // According to this function, anything with one or fewer "."s and one or fewer "-"s,
+    // and only number characters "1234567890" is a number. The "-" must be the leftmost
+    // character. Negative zeroes are also not allowed.
+
     var ALLOWED_DECIMALS = 1; //maximum number of decimals. 0 for ints, 1 for other
     var decimals = 0; //counter
     if (input.length === 0) {
@@ -280,8 +267,23 @@ function isNumeric(input) {
         switch (input.substring(i, i + 1)) {
             case "-":
                 if (i === 0) {
+                    // No negative zeroes
+                    if (input.includes('-')) {
+                        if (!(input.includes('1') ||
+                                input.includes('2') ||
+                                input.includes('3') ||
+                                input.includes('4') ||
+                                input.includes('5') ||
+                                input.includes('6') ||
+                                input.includes('7') ||
+                                input.includes('8') ||
+                                input.includes('9'))) {
+                            return false;
+                        }
+                    }
                     break;
                 } else {
+                    // "-" is only appropriate as the leftmost character.
                     return false;
                 }
             case "0":
@@ -307,6 +309,7 @@ function isNumeric(input) {
             case ".":
                 decimals++;
                 if (decimals > ALLOWED_DECIMALS) {
+                    // too many "."s
                     return false;
                 }
                 break;
@@ -319,6 +322,7 @@ function isNumeric(input) {
 }
 
 function replaceAll(searchThis, findThis, replaceWithThis) {
+    // Replaces all instaces of findThis in searchThis with replaceWithThis
     return searchThis.split(findThis).join(replaceWithThis);
 }
 ;

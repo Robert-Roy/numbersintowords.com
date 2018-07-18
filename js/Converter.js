@@ -11,7 +11,8 @@ function convert(input) {
     var strNegative = ""; // added to output later
     if (isNegative(input)) {
         strNegative = "negative ";
-        input = input.substring(1, input.length); // trim "-"
+        // trim single "-" off the left side
+        input = input.substring(1, input.length);
     }
     decimalIndex = input.indexOf(".");
     if (decimalIndex === -1) {
@@ -20,8 +21,7 @@ function convert(input) {
         // split string at decimal
         var strPredecimal = input.substring(0, decimalIndex);
         var strPostdecimal = input.substring(decimalIndex + 1, input.length);
-        // convert both strings
-        //VALID TO HERE
+        // convert both strings separately
         strPredecimal = getConvertedString(strPredecimal, false);
         strPostdecimal = getConvertedString(strPostdecimal, true);
         if (strPredecimal === "zero" && strPostdecimal.length !== 0) {
@@ -37,8 +37,6 @@ function convert(input) {
 }
 
 function getConvertedString(strConvert, blnFraction) {
-
-    //VALID TO HERE
     var blnFractionSelected = false;
     var strFraction = "";
     var retval = "";
@@ -246,7 +244,7 @@ function isValid(input) {
 }
 
 function isNegative(input) {
-    if (input.substring(0, 1) === "-") {
+    if (input.indexOf("-") === 0) {
         return true;
     }
     return false;
@@ -266,24 +264,22 @@ function isNumeric(input) {
     for (var i = 0; i < input.length; i++) {
         switch (input.substring(i, i + 1)) {
             case "-":
+                // "-" is only appropriate as the leftmost character.
                 if (i === 0) {
                     // No negative zeroes
-                    if (input.includes('-')) {
-                        if (!(input.includes('1') ||
-                                input.includes('2') ||
-                                input.includes('3') ||
-                                input.includes('4') ||
-                                input.includes('5') ||
-                                input.includes('6') ||
-                                input.includes('7') ||
-                                input.includes('8') ||
-                                input.includes('9'))) {
-                            return false;
-                        }
+                    if (!(input.includes('1') ||
+                            input.includes('2') ||
+                            input.includes('3') ||
+                            input.includes('4') ||
+                            input.includes('5') ||
+                            input.includes('6') ||
+                            input.includes('7') ||
+                            input.includes('8') ||
+                            input.includes('9'))) {
+                        return false;
                     }
                     break;
                 } else {
-                    // "-" is only appropriate as the leftmost character.
                     return false;
                 }
             case "0":

@@ -195,6 +195,7 @@ function wordsFromNum(strInput) {
 }
 
 function tens(input) {
+    
     switch (input) {
         case "2":
             return "twenty";
@@ -218,28 +219,35 @@ function tens(input) {
 }
 
 function isValid(input) {
+    // The maximum number of characters that can be evaluated as a number
+    // by this program right now.
+    let maxNumChars = 3006;
     // Numbers only
     if (!isNumeric(input)) {
         return false;
     }
     // If numbers is negative, remove the negative sign.
     if (isNegative(input)) {
-        input = input.substring(1, input.length); // trim "-"
+        input = input.substring(1, input.length);
     }
-    var decimalIndex = 0;
-    decimalIndex = input.indexOf(".");
-    if (decimalIndex === -1 && input.length < 3007) {
-        return true;
+    var decimalIndex = input.indexOf(".");
+    if (decimalIndex === -1 && input.length > maxNumChars) {
+        // if there is no decimal and the string is too long, return false
+        return false;
     } else {
+        // There is a decimal point. This verifies that the length of the strings
+        // Before and After the decimal point are less than or equal to maxNumChars.
         var strPredecimal = input.substring(0, decimalIndex);
         var strPostdecimal = input.substring(decimalIndex + 1, input.length);
-        if (strPredecimal.length + strPostdecimal.length === 0) { //"."
+        if (strPredecimal.length > maxNumChars || strPostdecimal.length > maxNumChars) {
             return false;
-        } else if (strPredecimal.length < 3007 && strPostdecimal.length < 3007) { // valid length
-            return true;
-        } else {
-            return false; // invalid length
         }
+        // Return false on "."
+        if (strPredecimal.length + strPostdecimal.length === 0) { 
+            return false;
+        } 
+        // If we have not returned false yet, string is valid.
+        return true;
     }
 }
 
@@ -321,4 +329,3 @@ function replaceAll(searchThis, findThis, replaceWithThis) {
     // Replaces all instaces of findThis in searchThis with replaceWithThis
     return searchThis.split(findThis).join(replaceWithThis);
 }
-;

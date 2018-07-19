@@ -16,29 +16,85 @@ function convert(input) {
     }
     decimalIndex = input.indexOf(".");
     if (decimalIndex === -1) {
-        output = getConvertedString(input, false); // convert input
+        output = getConvertedString(input); // convert input
     } else {
         // split string at decimal
         var strPredecimal = input.substring(0, decimalIndex);
         var strPostdecimal = input.substring(decimalIndex + 1, input.length);
-        // convert both strings separately
-        strPredecimal = getConvertedString(strPredecimal, false);
-        strPostdecimal = getConvertedString(strPostdecimal, true);
-        if (strPredecimal === "zero" && strPostdecimal.length !== 0) {
-            output = strPostdecimal; // only post decimal stuff
+        //convert both strings separately
+        var strConvertedPredecimal = getConvertedString(strPredecimal);
+        var strConvertedPostdecimal = getConvertedString(strPostdecimal);
+        var strPostdecimalUnit = getFractionalUnit(strPostdecimal);
+        if (strConvertedPredecimal === "zero" && strPostdecimal.length !== 0) {
+            // EX: "0.1" (zero and one tenth, the zero should be not be written)
+            output = strConvertedPostdecimal + " " + strPostdecimalUnit; 
         } else if (strPredecimal.length !== 0 && strPostdecimal.length !== 0) {
-            output = strPredecimal + " and " + strPostdecimal; // pre and post decimal stuff
+            // EX: "1.1" (one and one tenth) Zeroes beyond the decimal are significant
+            // figures and should be noted
+            output = strConvertedPredecimal + " and " + strConvertedPostdecimal + " " + strPostdecimalUnit; // pre and post decimal stuff
         } else {
-            output = strPredecimal; // only predecimal stuff
+            // EX "1."
+            output = strConvertedPredecimal; // only predecimal stuff
         }
     }
     output = strNegative + output;
     return output;
 }
 
-function getConvertedString(strConvert, blnFraction) {
-    var blnFractionSelected = false;
+function getFractionalUnit(strPercentageAsDecimal) {
+    // find the appropriate fraction for post-decimal text
     var strFraction = "";
+    // If there is no number, return no unit.
+    if(strPercentageAsDecimal === ""){
+        return "";
+    }
+    //Note: There are no commas in the input at this point, comma is only
+    //used for ease of reference
+    //number of commas that would be in the number written out
+    var commas = Math.floor((strPercentageAsDecimal.length - 1) / 3);
+    //everything before the comma (or end, if there is not one)
+    var precomma = strPercentageAsDecimal.length % 3;
+    // .000,000 should be considered 3, not 0
+    if (precomma === 0) {
+        precomma = 3;
+    }
+    var nextUnit = 0;
+    // EXAMPLES: .000 or .000000 = 3
+    // .00 or .00000 = 2
+    // .0 or .0000 = 1
+    switch (precomma) {
+        case 1:
+            strFraction = "ten"; // as in TEN thousanth
+            break;
+        case 2:
+            strFraction = "hundred"; // as in HUNDRED thousandth
+            break;
+        case 3:
+            // in this case you don't say "THOUSAND thousandth, you say millionth
+            // This number is used on the next line
+            nextUnit = 1;
+    }
+    // for each 3 characters in the number, you go one arabic unit higher.
+    // thousand, million, billion, etc. Go one extra if precomma = 3.
+    var unit = arabicNumeralUnits[commas + nextUnit].trim();
+    if (unit.length > 0) { // if unit is thousand or greater instead of ""
+        // add a space if adding "hundred" to "thousandth"
+        if(strFraction.length > 0){
+            strFraction = strFraction + " ";
+        }
+        strFraction = strFraction + unit + "th"; //one ten thousandth
+    } else {
+        // if unit is "", then we should get something like tenTH or hundredTH.
+        strFraction = strFraction + "th"; // as in 
+    }
+    // attempt to ."0000001" to one. If it is anything else, the fractional unit is pluralised
+    if (strPercentageAsDecimal != 1) {
+        strFraction = strFraction + "s";
+    }
+    return strFraction;
+}
+
+function getConvertedString(strConvert) {
     var retval = "";
     while (!(strConvert === "")) {
         //Note: There are no commas in the input at this point, comma is only
@@ -50,46 +106,6 @@ function getConvertedString(strConvert, blnFraction) {
         // input without length cannot get to this point, so 0 is always 3
         if (precomma === 0) {
             precomma = 3;
-        }
-        if (blnFraction && !blnFractionSelected) {
-            // find the appropriate fraction for post-decimal text
-            var nextUnit = 0;
-            switch (precomma) {
-                case 1:
-                    strFraction = " ten";
-                    break;
-                case 2:
-                    strFraction = " hundred";
-                    break;
-                case 3:
-                    nextUnit = 1;
-            }
-            var unit = arabicNumeralUnits[commas + nextUnit].trim();
-            if (unit.length > 0) {
-                try {
-                    var value = parseInt(strConvert);
-                    if (value === 1) {
-                        strFraction = strFraction + " " + unit + "th";
-                    } else {
-                        strFraction = strFraction + " " + unit + "ths";
-                    }
-                } catch (ex) {
-                    strFraction = strFraction + " " + unit + "ths";
-                }
-            } else {
-                try {
-                    var value = parseInt(strConvert);
-                    if (value === 1) {
-                        strFraction = strFraction + "th";
-                    } else {
-                        strFraction = strFraction + "ths";
-                    }
-                } catch (ex) {
-                    strFraction = strFraction + "ths";
-
-                }
-            }
-            blnFractionSelected = true;
         }
         // substring of everything before the comma
         var strThisUnit = strConvert.substring(0, precomma);
@@ -110,19 +126,13 @@ function getConvertedString(strConvert, blnFraction) {
         // input is cut shorter to remove addressed portion
         strConvert = strConvert.substring(precomma, strConvert.length);
     }
-
+    
     if (retval === "") {
         retval = "zero"; // if no output has been added yet, result is zero
     }
     retval = replaceAll(retval, "  ", " "); // remove doublespaces
     retval = retval.trim(); // remove trailing spaces
-    if (blnFraction && !(strFraction === "")) {
-        return retval + strFraction;
-    } else if (blnFraction) {
-        return "";
-    } else {
-        return retval;
-    }
+    return retval;
 }
 
 function wordsFromNum(strInput) {
@@ -195,7 +205,7 @@ function wordsFromNum(strInput) {
 }
 
 function tens(input) {
-    
+
     switch (input) {
         case "2":
             return "twenty";
@@ -243,9 +253,9 @@ function isValid(input) {
             return false;
         }
         // Return false on "."
-        if (strPredecimal.length + strPostdecimal.length === 0) { 
+        if (strPredecimal.length + strPostdecimal.length === 0) {
             return false;
-        } 
+        }
         // If we have not returned false yet, string is valid.
         return true;
     }

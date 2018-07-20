@@ -26,6 +26,6 @@ All rights reserved. Copyright Robert Roy 2016.
             <div id="output"></div>
             <input id="copyThis" type="text" name="copyThis">
         </div>
-        <script src="lib/jasmine/spec/feedreader.js"></script>
+        <script src="lib/jasmine/spec/spec.js"></script>
     </body>
 </html>

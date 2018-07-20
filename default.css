@@ -81,3 +81,6 @@ textarea{
 .jasmine_html-reporter{
     margin:0px;
 }
+.jasmine-run-options{
+    display:none;
+}

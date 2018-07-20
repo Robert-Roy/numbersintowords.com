@@ -7,12 +7,12 @@ All rights reserved. Copyright Robert Roy 2016.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Numbers Into Words</title>
+        <link rel="stylesheet" href="lib/jasmine/jasmine-3.1.0/jasmine.css">
         <link rel="stylesheet" href="default.css">
         <script src="lib/jquery/jquery-3.3.1.min.js"></script>
         <script src="js/ArabicNumeralUnits.js"></script>
         <script src="js/UserInterface.js"></script>
         <script src="js/Converter.js"></script>
-        <link rel="stylesheet" href="lib/jasmine/jasmine-3.1.0/jasmine.css">
         <script src="lib/jasmine/jasmine-3.1.0/jasmine.js"></script>
         <script src="lib/jasmine/jasmine-3.1.0/jasmine-html.js"></script>
         <script src="lib/jasmine/jasmine-3.1.0/boot.js"></script>

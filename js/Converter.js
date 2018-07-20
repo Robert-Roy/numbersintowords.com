@@ -27,7 +27,7 @@ function convert(input) {
         var strPostdecimalUnit = getFractionalUnit(strPostdecimal);
         if (strConvertedPredecimal === "zero" && strPostdecimal.length !== 0) {
             // EX: "0.1" (zero and one tenth, the zero should be not be written)
-            output = strConvertedPostdecimal + " " + strPostdecimalUnit; 
+            output = strConvertedPostdecimal + " " + strPostdecimalUnit;
         } else if (strPredecimal.length !== 0 && strPostdecimal.length !== 0) {
             // EX: "1.1" (one and one tenth) Zeroes beyond the decimal are significant
             // figures and should be noted
@@ -45,7 +45,7 @@ function getFractionalUnit(strPercentageAsDecimal) {
     // find the appropriate fraction for post-decimal text
     var strFraction = "";
     // If there is no number, return no unit.
-    if(strPercentageAsDecimal === ""){
+    if (strPercentageAsDecimal === "") {
         return "";
     }
     //Note: There are no commas in the input at this point, comma is only
@@ -79,7 +79,7 @@ function getFractionalUnit(strPercentageAsDecimal) {
     var unit = arabicNumeralUnits[commas + nextUnit].trim();
     if (unit.length > 0) { // if unit is thousand or greater instead of ""
         // add a space if adding "hundred" to "thousandth"
-        if(strFraction.length > 0){
+        if (strFraction.length > 0) {
             strFraction = strFraction + " ";
         }
         strFraction = strFraction + unit + "th"; //one ten thousandth
@@ -98,7 +98,7 @@ function getConvertedString(strConvert) {
     // Converts an input string to numerical output EX 3 to "three"
     var retval = "";
     // "" should return ""
-    if(strConvert === ""){
+    if (strConvert === "") {
         return retval;
     }
     while (!(strConvert === "")) {
@@ -135,7 +135,7 @@ function getConvertedString(strConvert) {
     // because of the way zeroes are handled, a string of 000000000000000000000000
     // will cause retval to be "" at this point. It should be 0
     if (retval === "") {
-        retval = "zero"; 
+        retval = "zero";
     }
     retval = replaceAll(retval, "  ", " "); // remove doublespaces
     retval = retval.trim(); // remove trailing spaces
@@ -291,23 +291,22 @@ function isNumeric(input) {
         switch (input[i]) {
             case "-":
                 // "-" is only appropriate as the leftmost character.
-                if (i === 0) {
-                    // No negative zeroes
-                    if (!(input.includes('1') ||
-                            input.includes('2') ||
-                            input.includes('3') ||
-                            input.includes('4') ||
-                            input.includes('5') ||
-                            input.includes('6') ||
-                            input.includes('7') ||
-                            input.includes('8') ||
-                            input.includes('9'))) {
-                        return false;
-                    }
-                    break;
-                } else {
+                if (i !== 0) {
                     return false;
                 }
+                // No negative zeroes
+                if (!(input.includes('1') ||
+                        input.includes('2') ||
+                        input.includes('3') ||
+                        input.includes('4') ||
+                        input.includes('5') ||
+                        input.includes('6') ||
+                        input.includes('7') ||
+                        input.includes('8') ||
+                        input.includes('9'))) {
+                    return false;
+                }
+                break;
             case "0":
                 break;
             case "1":

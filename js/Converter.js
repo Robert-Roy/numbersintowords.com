@@ -95,7 +95,12 @@ function getFractionalUnit(strPercentageAsDecimal) {
 }
 
 function getConvertedString(strConvert) {
+    // Converts an input string to numerical output EX 3 to "three"
     var retval = "";
+    // "" should return ""
+    if(strConvert === ""){
+        return retval;
+    }
     while (!(strConvert === "")) {
         //Note: There are no commas in the input at this point, comma is only
         //used for ease of reference
@@ -103,39 +108,41 @@ function getConvertedString(strConvert) {
         var commas = Math.floor((strConvert.length - 1) / 3);
         //everything before the comma (or end, if there is not one)
         var precomma = strConvert.length % 3;
-        // input without length cannot get to this point, so 0 is always 3
+        // 300,000 should be considered 3, not 0
         if (precomma === 0) {
             precomma = 3;
         }
         // substring of everything before the comma
         var strThisUnit = strConvert.substring(0, precomma);
+        // substring of everything after the comma overwrites original string
+        strConvert = strConvert.substring(precomma, strConvert.length);
 
-        //loop trims zeroes at the beginning of numbers
+        //Go through each number "030"
         for (var a = 0; a < strThisUnit.length; a++) {
-            if (strThisUnit.substring(a, a + 1) === "0") {
+            if (strThisUnit[a] === "0") {
                 // remove first letter of string
                 strThisUnit = strThisUnit.substring(a + 1, strThisUnit.length);
-                // move counter back
+                // move counter back to reiterate over same index
                 a--;
             } else {
                 // if a nonzero number is hit, output is created
-                retval = retval + wordsFromNum(strThisUnit) + arabicNumeralUnits[commas];
+                // "30" or "300" might get here, but "030" will not.
+                retval = retval + wordsForNum(strThisUnit) + arabicNumeralUnits[commas];
                 break;
             }
         }
-        // input is cut shorter to remove addressed portion
-        strConvert = strConvert.substring(precomma, strConvert.length);
     }
-    
+    // because of the way zeroes are handled, a string of 000000000000000000000000
+    // will cause retval to be "" at this point. It should be 0
     if (retval === "") {
-        retval = "zero"; // if no output has been added yet, result is zero
+        retval = "zero"; 
     }
     retval = replaceAll(retval, "  ", " "); // remove doublespaces
     retval = retval.trim(); // remove trailing spaces
     return retval;
 }
 
-function wordsFromNum(strInput) {
+function wordsForNum(strInput) {
     // return anything 0-19
     switch (strInput) {
         case "0":
@@ -179,25 +186,26 @@ function wordsFromNum(strInput) {
         case "19":
             return "nineteen";
     }
-    var retval = ""; //return value
     switch (strInput.length) {
         case 2:
-            // input >= 20, so must get tens and ones separate
-            retval = tens(strInput.substring(0, 1));
-            // num = XY, if X and Y are not zero, we need a hyphen
-            if (!(strInput.substring(1, 2) === "0") && !(strInput.substring(0, 1) === "0")) {
-                retval = retval + "-";
-            }
+            // 20 <= input <= 99, so must get tens and ones separate
+            var strTens = tens(strInput[0]);
             // recurse for ones
-            retval = retval + wordsFromNum(strInput.substring(1, 2));
-            return retval;
+            var strOnes = wordsForNum(strInput[1]);
+            // num = XY, if X and Y are not zero (zero is evaluated as ""), 
+            // we need a hyphen EX: fifty or five vs fifty-five
+            if (strTens !== "" && strOnes !== "") {
+                return strTens + "-" + strOnes;
+            }
+            // at least one of these strings will be "".
+            return strTens + strOnes;
         case 3:
-            // recurse for first digit
-            retval = wordsFromNum(strInput.substring(0, 1)) + " hundred ";
+            // 100 <= input <= 999;
+            // recurse for first digit [1]00 = "one hundred"
+            var strHundreds = wordsForNum(strInput[0]) + " hundred ";
             // recurse for remaining two digit number
-            var strones = strInput.substring(1, 3);
-            retval = retval + wordsFromNum(strones);
-            return retval;
+            var strTensAndOnes = wordsForNum(strInput.substring(1, 3));
+            return strHundreds + strTensAndOnes;
         default:
             // should be unreachable, but just in case
             return " ERROR ";
@@ -280,7 +288,7 @@ function isNumeric(input) {
         return false; // "" is not numeric
     }
     for (var i = 0; i < input.length; i++) {
-        switch (input.substring(i, i + 1)) {
+        switch (input[i]) {
             case "-":
                 // "-" is only appropriate as the leftmost character.
                 if (i === 0) {

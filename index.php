@@ -18,12 +18,14 @@ All rights reserved. Copyright Robert Roy 2016.
         <script src="lib/jasmine/jasmine-2.1.2/boot.js"></script>
     </head>
     <body>            
-        <div><label class="label" for="input">Enter a number:</label></div>
-        <textarea type="text" rows="4" id="input" name="input"></textarea>
-        <input id="copy" class="crispbutton" style="margin-top:3px" type="submit" value="Copy">
-        <input id="impress" class="crispbutton" style="margin-top:3px" type="submit" value="Impress Me">
-        <div id="output"></div>
-        <input id="copyThis" type="text" name="copyThis">
+        <div id="main">
+            <div><label class="label" for="input">Enter a number:</label></div>
+            <textarea type="text" rows="4" id="input" name="input"></textarea>
+            <input id="copy" class="crispbutton" style="margin-top:3px" type="submit" value="Copy">
+            <input id="impress" class="crispbutton" style="margin-top:3px" type="submit" value="Impress Me">
+            <div id="output"></div>
+            <input id="copyThis" type="text" name="copyThis">
+        </div>
         <script src="lib/jasmine/spec/feedreader.js"></script>
     </body>
 </html>

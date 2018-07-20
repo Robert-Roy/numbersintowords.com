@@ -24,12 +24,14 @@ img{
     padding-bottom:50px;
     text-align: center;
 }
-body, html{
-    text-align:center;
-    min-height:100%;
-    min-width:100%;
+html{
+    min-height: 100%;
+    min-width: 100%;
 }
-#div{
+#container{
+    text-align:center;
+}
+#main{
     text-align:center;
     font-size:12px;
     display:block;

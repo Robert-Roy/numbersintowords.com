@@ -12,10 +12,10 @@ All rights reserved. Copyright Robert Roy 2016.
         <script src="js/ArabicNumeralUnits.js"></script>
         <script src="js/UserInterface.js"></script>
         <script src="js/Converter.js"></script>
-        <link rel="stylesheet" href="lib/jasmine/jasmine-2.1.2/jasmine.css">
-        <script src="lib/jasmine/jasmine-2.1.2/jasmine.js"></script>
-        <script src="lib/jasmine/jasmine-2.1.2/jasmine-html.js"></script>
-        <script src="lib/jasmine/jasmine-2.1.2/boot.js"></script>
+        <link rel="stylesheet" href="lib/jasmine/jasmine-3.1.0/jasmine.css">
+        <script src="lib/jasmine/jasmine-3.1.0/jasmine.js"></script>
+        <script src="lib/jasmine/jasmine-3.1.0/jasmine-html.js"></script>
+        <script src="lib/jasmine/jasmine-3.1.0/boot.js"></script>
     </head>
     <body>            
         <div id="main">

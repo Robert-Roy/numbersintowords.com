@@ -78,3 +78,6 @@ textarea{
     background:#f0f0f0;
     margin-bottom:5px;
 }
+.jasmine_html-reporter{
+    margin:0px;
+}

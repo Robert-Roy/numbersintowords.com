@@ -25,7 +25,7 @@ function convert(input) {
         var strConvertedPredecimal = getConvertedString(strPredecimal);
         var strConvertedPostdecimal = getConvertedString(strPostdecimal);
         var strPostdecimalUnit = getFractionalUnit(strPostdecimal);
-        if (strConvertedPredecimal === "zero" && strPostdecimal.length !== 0) {
+        if ((strConvertedPredecimal === "zero" || strConvertedPredecimal === "") && strPostdecimal.length !== 0) {
             // EX: "0.1" (zero and one tenth, the zero should be not be written)
             output = strConvertedPostdecimal + " " + strPostdecimalUnit;
         } else if (strPredecimal.length !== 0 && strPostdecimal.length !== 0) {

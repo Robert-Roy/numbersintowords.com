@@ -6,16 +6,16 @@
  *
  * @author Robert Roy <www.robertsworkspace.com>
  */
+var $input;
+var $copyThis;
+var $output;
+var $copy;
 
 $(document).ready(function () {
-    var $input = $("#input");
-    var $copyThis = $("#copyThis");
-    var $output = $("#output");
-    var $copy = $("#copy");
-
-    // Reset fields so each refresh is a new page without previous cached inputs
-    $input.val("");
-    $copyThis.val("");
+    $input = $("#input");
+    $copyThis = $("#copyThis");
+    $output = $("#output");
+    $copy = $("#copy");
 
     $input.keypress(function (e) {
         // Prevents creating newlines in the input field
@@ -76,6 +76,7 @@ $(document).ready(function () {
         $output.html(output);
         $copyThis.val(output);
         if (that.val() === "") {
+            $copyThis.val("");
             $output.html("");
         }
         // Rename copy function to its original text, just in case it was modified
@@ -84,3 +85,10 @@ $(document).ready(function () {
     }
 });
 
+function reset() {
+    // Reset fields so each refresh is a new page without previous cached inputs
+    $input.val("");
+    $output.val("");
+    $copy.text("Copy");
+    $input.change();
+}
